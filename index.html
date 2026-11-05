@@ -1,0 +1,384 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PROXY TN</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #080b12;
+  color: white;
+  min-height: 100vh;
+}
+
+header {
+  height: 70px;
+  background: #101725;
+  border-bottom: 1px solid #26334a;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 22px;
+}
+
+.logo {
+  font-size: 23px;
+  font-weight: bold;
+  color: #4da3ff;
+  letter-spacing: 2px;
+}
+
+.status {
+  color: #39d98a;
+  font-size: 12px;
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 85vh;
+  padding: 20px;
+}
+
+.login-box {
+  width: 100%;
+  max-width: 390px;
+  background: #111a29;
+  border: 1px solid #263a57;
+  border-radius: 16px;
+  padding: 30px;
+  text-align: center;
+}
+
+.login-box h1 {
+  color: #4da3ff;
+  margin-bottom: 10px;
+}
+
+.login-box p {
+  color: #8c9bb0;
+  margin-bottom: 25px;
+  font-size: 14px;
+}
+
+input {
+  width: 100%;
+  padding: 15px;
+  margin: 9px 0;
+  border: 1px solid #34445e;
+  border-radius: 9px;
+  background: #080e19;
+  color: white;
+  outline: none;
+}
+
+button {
+  border: none;
+  cursor: pointer;
+  border-radius: 9px;
+  padding: 14px;
+  font-weight: bold;
+  color: white;
+  background: #237ee8;
+}
+
+.login-box button {
+  width: 100%;
+  margin-top: 15px;
+}
+
+button:hover {
+  opacity: .85;
+}
+
+#dashboard {
+  display: none;
+}
+
+.layout {
+  display: flex;
+  min-height: calc(100vh - 70px);
+}
+
+.sidebar {
+  width: 230px;
+  background: #101725;
+  padding: 25px 15px;
+  border-right: 1px solid #26334a;
+}
+
+.sidebar h3 {
+  color: #8294ae;
+  font-size: 12px;
+  margin: 15px 10px;
+}
+
+.sidebar button {
+  width: 100%;
+  text-align: left;
+  margin-bottom: 9px;
+  background: transparent;
+  color: #bdcbe0;
+}
+
+.sidebar button.active,
+.sidebar button:hover {
+  background: #1c3555;
+  color: #58a9ff;
+}
+
+.content {
+  flex: 1;
+  padding: 30px;
+  min-width: 0;
+}
+
+.content h1 {
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  color: #8797ad;
+  margin-bottom: 25px;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+}
+
+.card {
+  background: #111a29;
+  border: 1px solid #263a57;
+  border-radius: 13px;
+  padding: 22px;
+}
+
+.card h3 {
+  color: #8fa3bf;
+  font-size: 14px;
+  margin-bottom: 14px;
+}
+
+.card strong {
+  font-size: 23px;
+  color: #58a9ff;
+}
+
+.section {
+  display: none;
+}
+
+.section.active {
+  display: block;
+}
+
+.info {
+  margin-top: 22px;
+  padding: 20px;
+  background: #111a29;
+  border: 1px solid #263a57;
+  border-radius: 12px;
+  color: #a7b6ca;
+  line-height: 1.7;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  color: #65758d;
+  font-size: 12px;
+}
+
+@media(max-width:650px) {
+  .layout {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    border-right: none;
+    border-bottom: 1px solid #26334a;
+  }
+
+  .sidebar h3 {
+    display: none;
+  }
+
+  .sidebar button {
+    width: auto;
+    flex: 1;
+    text-align: center;
+    font-size: 12px;
+  }
+
+  .content {
+    padding: 20px 15px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">PROXY TN</div>
+  <div class="status">● SISTEMA ONLINE</div>
+</header>
+
+<div class="login-container" id="login">
+  <div class="login-box">
+    <h1>PROXY TN</h1>
+    <p>Bem-vindo ao seu painel de gerenciamento</p>
+
+    <input id="username" placeholder="Seu nome de usuário">
+
+    <button onclick="entrar()">ENTRAR NO PAINEL</button>
+
+    <p style="margin-top:20px;margin-bottom:0">
+      Interface demonstrativa
+    </p>
+  </div>
+</div>
+
+<div id="dashboard">
+
+<div class="layout">
+
+<nav class="sidebar">
+  <h3>MENU PRINCIPAL</h3>
+
+  <button class="active" onclick="abrir('inicio',this)">⌂ Início</button>
+
+  <button onclick="abrir('perfil',this)">◉ Perfil</button>
+
+  <button onclick="abrir('config',this)">⚙ Configurações</button>
+
+  <button onclick="abrir('sobre',this)">ⓘ Sobre</button>
+
+  <button onclick="sair()">↪ Sair</button>
+</nav>
+
+<main class="content">
+
+<section class="section active" id="inicio">
+  <h1>Dashboard</h1>
+  <p class="subtitle">Bem-vindo ao PROXY TN.</p>
+
+  <div class="cards">
+    <div class="card">
+      <h3>STATUS DO SISTEMA</h3>
+      <strong>ONLINE</strong>
+    </div>
+
+    <div class="card">
+      <h3>VERSÃO</h3>
+      <strong>1.0.0</strong>
+    </div>
+
+    <div class="card">
+      <h3>USUÁRIO</h3>
+      <strong id="userDisplay">Visitante</strong>
+    </div>
+  </div>
+
+  <div class="info">
+    <h3>PROXY TN</h3>
+    <p>Seu painel está funcionando em modo de demonstração.</p>
+  </div>
+</section>
+
+<section class="section" id="perfil">
+  <h1>Meu perfil</h1>
+  <p class="subtitle">Informações da sessão atual.</p>
+
+  <div class="card">
+    <h3>USUÁRIO CONECTADO</h3>
+    <strong id="profileName">Visitante</strong>
+  </div>
+</section>
+
+<section class="section" id="config">
+  <h1>Configurações</h1>
+  <p class="subtitle">Personalize seu painel.</p>
+
+  <div class="card">
+    <h3>APARÊNCIA</h3>
+    <p>Modo escuro ativado.</p>
+    <br>
+    <button onclick="alert('O tema escuro já está ativado!')">
+      VER TEMA
+    </button>
+  </div>
+</section>
+
+<section class="section" id="sobre">
+  <h1>Sobre o projeto</h1>
+  <div class="info">
+    <h3>PROXY TN</h3>
+    <p>Versão: 1.0.0</p>
+    <p>Desenvolvido para gerenciamento e demonstração.</p>
+  </div>
+</section>
+
+</main>
+</div>
+</div>
+
+<footer>
+  PROXY TN © 2026
+</footer>
+
+<script>
+function entrar() {
+  const nome = document.getElementById("username").value.trim();
+
+  if (!nome) {
+    alert("Digite seu nome para continuar.");
+    return;
+  }
+
+  document.getElementById("login").style.display = "none";
+  document.getElementById("dashboard").style.display = "block";
+
+  document.getElementById("userDisplay").textContent = nome;
+  document.getElementById("profileName").textContent = nome;
+}
+
+function abrir(id, botao) {
+  document.querySelectorAll(".section").forEach(s => {
+    s.classList.remove("active");
+  });
+
+  document.getElementById(id).classList.add("active");
+
+  document.querySelectorAll(".sidebar button").forEach(b => {
+    b.classList.remove("active");
+  });
+
+  botao.classList.add("active");
+}
+
+function sair() {
+  document.getElementById("dashboard").style.display = "none";
+  document.getElementById("login").style.display = "flex";
+  document.getElementById("username").value = "";
+}
+</script>
+
+</body>
+</html>
